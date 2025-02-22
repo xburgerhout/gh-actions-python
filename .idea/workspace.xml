@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="52b94b54-28af-45cf-b3df-012bbc7fc972" name="Changes" comment="Github actions">
-      <change afterPath="$PROJECT_DIR$/.github/workflows/pysetup.yaml" afterDir="false" />
+    <list default="true" id="52b94b54-28af-45cf-b3df-012bbc7fc972" name="Changes" comment="Github actions improvements">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/pysetup.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/actions/pysetup.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/workflows/run_tests.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/run_tests.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,6 +74,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/.github/actions" />
       <recent name="$PROJECT_DIR$/.github/workflows" />
     </key>
   </component>
@@ -147,7 +147,7 @@
       <updated>1740236733958</updated>
       <workItem from="1740236734987" duration="3621000" />
       <workItem from="1740240367506" duration="1878000" />
-      <workItem from="1740242449611" duration="1984000" />
+      <workItem from="1740242449611" duration="2109000" />
     </task>
     <task id="LOCAL-00001" summary="Sample project committed">
       <option name="closed" value="true" />
@@ -213,7 +213,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740240793610</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Github actions improvements">
+      <option name="closed" value="true" />
+      <created>1740244452687</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1740244452687</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -235,7 +243,8 @@
     <MESSAGE value="Added gitignore" />
     <MESSAGE value="ruff fixes" />
     <MESSAGE value="Github actions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Github actions" />
+    <MESSAGE value="Github actions improvements" />
+    <option name="LAST_COMMIT_MESSAGE" value="Github actions improvements" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/gh_actions_python$Ruff_lint.coverage" NAME="Ruff lint Coverage Results" MODIFIED="1740240008409" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$ContentRoot$" />
