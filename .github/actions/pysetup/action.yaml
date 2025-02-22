@@ -1,0 +1,41 @@
+name: Python setup composite action
+description: A composite action to setup Python environment
+
+inputs:
+  python-version:
+    description: 'Python version to use'
+    required: true
+    default: '3.10'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Install dependencies
+      shell: bash
+      run: |
+        python -m pip install pip==24.0
+        pip install -r requirements.txt
+
+    - name: Cache python environment # cache installs too
+      id: cache-python
+      uses: actions/cache@v4
+      with:
+        path: ${{ env.pythonLocation }}
+        # on requirements or python change, cache is invalidated
+        key: ${{ env.pythonLocation }}-${{ hashFiles('**/requirements.txt') }}-${{ hashFiles('**/requirements_cpu.txt') }}
+        # if cache fails use any older key with same python version as starting point
+        restore-keys: ${{ env.pythonLocation }}-
+    - if: ${{ steps.cache-python.outputs.cache-hit != 'true' }}
+      name: Install dependencies
+      shell: bash
+      run: |
+        python -m pip install pip==24.0
+        pip install -r requirements.txt
