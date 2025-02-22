@@ -1,0 +1,30 @@
+line-length = 120
+
+[lint]
+select = [
+    # see https://docs.astral.sh/ruff/rules/ for all possible rules
+
+    "E", # pycodestyle
+    "F", # pyflakes
+    "B", # flake8-bugbear
+    "C4", # flake-8 comprehensions, checks that they are used appropriately
+    "Q", # appropriate use of quotes
+
+    # separate rules
+    "SIM102", # Use a single if statement instead of nested if statements
+    "SIM103", # Checks for if statements that can be replaced with bool.
+    "SIM118", # Use key {operator} dict instead of key {operator} dict.keys()
+    "SIM401", # Use {contents} instead of an if block
+    "UP034", # Avoid extraneous parentheses
+    "PLR5501", # Use elif instead of else then if, to reduce indentation
+    "PLW0211", # First argument of a static method should not be named {argument_name}
+    "UP007", # Use X | Y for type annotations
+]
+
+ignore = [
+    "C408", # using tuple() instead of (), too opinionated
+    "B010", "B009", # complaining about setattr/getattr, which is sometimes necessary for ctypes
+    "B023", # binding arguments in functions, lot of false positives
+    "F403", # star import
+    "F405"  # attribute defined from star imports
+]
