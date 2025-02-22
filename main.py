@@ -1,9 +1,9 @@
 import numpy as np
 import argparse
 import matplotlib.pyplot as plt
+from typing import Tuple
 
-
-def project_to_planes(pointcloud):
+def project_to_planes(pointcloud: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
     """
     Projects the points to the X, Y, and Z planes.
 
@@ -19,7 +19,7 @@ def project_to_planes(pointcloud):
 
     return xy_projection, xz_projection, yz_projection
 
-def generate_sample_data(num_points=100):
+def generate_sample_data(num_points: int=100) -> np.ndarray:
     """
     Generates sample input data for the point cloud using three different distributions.
 
@@ -36,7 +36,7 @@ def generate_sample_data(num_points=100):
     pointcloud = np.vstack((x, y, z)).T
     return pointcloud
 
-def plot_projections(pointcloud, xy_projection, xz_projection, yz_projection):
+def plot_projections(pointcloud: np.ndarray, xy_projection: np.ndarray, xz_projection: np.ndarray, yz_projection: np.ndarray):
     """
     Plots the input data and the three projection results.
 
@@ -53,7 +53,7 @@ def plot_projections(pointcloud, xy_projection, xz_projection, yz_projection):
     ax1.set_title('Original Point Cloud')
     ax1.set_xlabel('X')
     ax1.set_ylabel('Y')
-    ax1.set_zlabel('Z')
+    #ax1.set_zlabel('Z')
 
     ax2 = fig.add_subplot(222)
     ax2.scatter(xy_projection[:, 0], xy_projection[:, 1], c='g', marker='o')
@@ -76,7 +76,7 @@ def plot_projections(pointcloud, xy_projection, xz_projection, yz_projection):
     plt.tight_layout()
     plt.show()
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(description='Project point cloud to X, Y, and Z planes.')
     parser.add_argument('--num_points', type=int, default=100, help='Number of points to generate for each coordinate.')
 
