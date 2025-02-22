@@ -1,0 +1,90 @@
+name: Quality Checks
+
+on:
+  pull_request:
+    paths-ignore:
+      - 'docs/**'
+      - 'README.md'
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'docs/**'
+      - 'README.md'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  #### PYTHON TYPECHECK AND LINTING ####
+  python-static:
+    name: Py Static Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      # Install python dependencies
+      - name: Cache Python environment # cache installs too
+        id: cache-python
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.pythonLocation }}
+          # on requirements or python change, cache is invalidated
+          key: ${{ env.pythonLocation }}-${{ hashFiles('**/requirements.txt') }}-${{ hashFiles('**/requirements_cpu.txt') }}
+          # if cache fails use any older key with same python version as starting point
+          restore-keys: ${{ env.pythonLocation }}-
+      - if: ${{ steps.cache-python.outputs.cache-hit != 'true' }}
+        name: Install dependencies
+        run: |
+          python -m pip install pip==24.0
+          pip install -r requirements.txt
+      - name: Ruff Lint
+        if: always()
+        run: ruff check .
+      - name: MyPy Check
+        if: always()  # run even if previous stage failed
+        run: mypy .
+  #### PYTHON TESTS ####
+  python-tests:
+    name: Py Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v3
+      # Setup test environment
+      - name: Install OpenGL for PySide6
+        run: sudo apt-get update && sudo apt-get install libopengl0 libegl1 libgl1 libnss3 libnss3-dev libxkbcommon-x11-0 -y
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      # Install python dependencies
+      - name: Cache python environment # cache installs too
+        id: cache-python
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.pythonLocation }}
+          # on requirements or python change, cache is invalidated
+          key: ${{ env.pythonLocation }}-${{ hashFiles('**/requirements.txt') }}-${{ hashFiles('**/requirements_cpu.txt') }}
+          # if cache fails use any older key with same python version as starting point
+          restore-keys: ${{ env.pythonLocation }}-
+      - if: ${{ steps.cache-python.outputs.cache-hit != 'true' }}
+        name: Install dependencies
+        run: |
+          python -m pip install pip==24.0
+          pip install -r requirements.txt
+      # Run the tests
+      - name: Perform tests
+        run: |
+          export RUN_ENV="ci"
+          pytest --cov=. --cov-report=xml --cov-report=html --cov-config=.coveragerc
+
+      - name: Report coverage
+        uses: py-cov-action/python-coverage-comment-action@v3
+        with:
+          GITHUB_TOKEN: ${{ github.token }}
